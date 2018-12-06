@@ -66,7 +66,7 @@ class EChartController extends Controller
 
         $chartjs1 = app()->chartjs
                          ->name('lineChartTest')
-                         ->type('bar')
+                         ->type('horizontalBar')
                          ->size(['width' => 200, 'height' => 200])
                          ->labels($label)
                          ->datasets([
@@ -121,65 +121,10 @@ class EChartController extends Controller
                                 ]
                 ]);
 
-                $chartjs2 = app()->chartjs
-                                 ->name('lineChartTest')
-                                 ->type('horizontalBar')
-                                 ->size(['width' => 200, 'height' => 200])
-                                 ->labels($label)
-                                 ->datasets([
-                            [
-                                "label" => "Open",
-                                'backgroundColor' => "rgba(38, 185, 154, 0.31)",
-                                'borderColor' => "rgba(38, 185, 154, 0.7)",
-                                "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
-                                "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
-                                "pointHoverBackgroundColor" => "#fff",
-                                "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                                'data' => $open,
-                            ],
-                            [
-                                "label" => "Inprogress",
-                                'backgroundColor' => "rgba(38, 185, 154, 1.31)",
-                                'borderColor' => "rgba(38, 185, 154, 0.7)",
-                                "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
-                                "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
-                                "pointHoverBackgroundColor" => "#fff",
-                                "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                                'data' => $inprogress,
-                            ],
-                            [
-                                "label" => "Completed",
-                                'backgroundColor' => "rgba(20, 100, 154, 0.31)",
-                                'borderColor' => "rgba(38, 185, 154, 0.7)",
-                                "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
-                                "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
-                                "pointHoverBackgroundColor" => "#fff",
-                                "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                                'data' => $completed,
-                            ]
-                        ])
-                              ->options([])
-                              ->optionsRaw([
-                            'legend' => [
-                                          'display' => true,
-                                          'labels' => ['fontColor' => '#000'] ],
-                            'scales' => [
-                                'xAxes' => [
-                                            [ 'stacked' => true,
-                                              'gridLines' => [ 'display' => true ]
-                                            ]
-                                          ],
-
-                                'yAxes'  => [
-                                              [ 'stacked' => true,
-                                                'gridLines' => [ 'display' => true ]
-                                              ]
-                                            ]
-                                        ]
-                        ]);
 
 
-      return view('EChart', compact('StatusSummeryByOwner','high','lava','chartjs1','chartjs2','tables'));
+
+      return view('EChart', compact('StatusSummeryByOwner','high','lava','chartjs1','tables'));
 
 
 }

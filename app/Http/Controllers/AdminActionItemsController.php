@@ -15,6 +15,7 @@
 			$this->orderby = "id,desc";
 			$this->global_privilege = false;
 			$this->button_table_action = true;
+			$this->button_bulk_action = false;
 			$this->button_action_style = "button_icon";
 			$this->button_add = true;
 			$this->button_edit = true;
@@ -29,13 +30,15 @@
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
+			$this->col[] = ["label"=>"Action Id","name"=>"id"];
 			$this->col[] = ["label"=>"Objective","name"=>"objectives_id","join"=>"objectives,name"];
 			$this->col[] = ["label"=>"Action","name"=>"name"];
 			$this->col[] = ["label"=>"Owner","name"=>"owners_id","join"=>"owners,name"];
-			$this->col[] = ["label"=>"Status","name"=>"status_id","join"=>"status,name"];
-			$this->col[] = ["label"=>"Due Date","name"=>"due_date"];
-			$this->col[] = ["label"=>"Revised Date","name"=>"revised_date"];
-			$this->col[] = ["label"=>"Last Update On","name"=>"last_update"];
+			$this->col[] = ["label"=>"Owner Id","name"=>"owners_id","join"=>"owners,id"];
+//			$this->col[] = ["label"=>"Status","name"=>"status_id","join"=>"status,name"];
+//			$this->col[] = ["label"=>"Due Date","name"=>"due_date"];
+//			$this->col[] = ["label"=>"Revised Date","name"=>"revised_date"];
+//			$this->col[] = ["label"=>"Last Update On","name"=>"last_update"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -46,12 +49,7 @@
 			$this->form[] = ['label'=>'Owner','name'=>'owners_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'owners,name'];
 			$this->form[] = ['label'=>'Status','name'=>'status_id','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'status,name'];
 			$this->form[] = ['label'=>'Due Date','name'=>'due_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
-			if(CRUDBooster::getCurrentMethod() == 'getAdd') {
-				//  $this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','disabled'=>'True','validation'=>'date','width'=>'col-sm-1'];
-					  }else {
-				  $this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
-				  }
-			//$this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
+			$this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Comments','name'=>'comments','type'=>'textarea','validation'=>'string|min:5|max:5000','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Independant Review','name'=>'review','type'=>'textarea','validation'=>'string|min:5|max:5000','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Active','name'=>'active','type'=>'radio','validation'=>'integer|min:0','width'=>'col-sm-10','dataenum'=>'1|Yes;0|No'];
@@ -59,26 +57,21 @@
 
 			# OLD START FORM
 			//$this->form = [];
-			//
 			//$this->form[] = ['label'=>'Objective','name'=>'objectives_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'objectives,name'];
 			//$this->form[] = ['label'=>'Action','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
 			//$this->form[] = ['label'=>'Deliverables','name'=>'description','type'=>'textarea','validation'=>'string|min:5|max:5000','width'=>'col-sm-10'];
-			//
 			//$this->form[] = ['label'=>'Owner','name'=>'owners_id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'owners,name'];
-			//$this->form[] = ['label'=>'Status','name'=>'status_id','type'=>'select','value'=>'5','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'status,name'];
+			//$this->form[] = ['label'=>'Status','name'=>'status_id','type'=>'select','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'status,name'];
 			//$this->form[] = ['label'=>'Due Date','name'=>'due_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
-			//
-			//
-			//
 			//if(CRUDBooster::getCurrentMethod() == 'getAdd') {
 			////  $this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','disabled'=>'True','validation'=>'date','width'=>'col-sm-1'];
 			//}else {
 			//$this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
 			//}
-			////	$this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
+			////$this->form[] = ['label'=>'Revised Date','name'=>'revised_date','type'=>'date','validation'=>'required|date','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Comments','name'=>'comments','type'=>'textarea','validation'=>'string|min:5|max:5000','width'=>'col-sm-10'];
 			//$this->form[] = ['label'=>'Independant Review','name'=>'review','type'=>'textarea','validation'=>'string|min:5|max:5000','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Active','name'=>'active','type'=>'radio','validation'=>'integer|min:0','width'=>'col-sm-10','dataenum'=>'1|Yes;0|No','value'=>'1'];
+			//$this->form[] = ['label'=>'Active','name'=>'active','type'=>'radio','validation'=>'integer|min:0','width'=>'col-sm-10','dataenum'=>'1|Yes;0|No'];
 			# OLD END FORM
 
 			/* 
@@ -94,6 +87,7 @@
 	        | 
 	        */
 	        $this->sub_module = array();
+	        $this->sub_module[] = ['label'=>'Sub Module','path'=>'owners','foreign_key'=>'id','button_color'=>'warning','button_icon'=>'fa fa-tags','parent_columns'=>'name'];
 
 
 	        /* 

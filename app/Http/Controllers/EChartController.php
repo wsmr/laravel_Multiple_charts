@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+
 use App\Charts\Test;
 use App\Charts\Test2;
 use App\Charts\Test3;
@@ -17,7 +18,7 @@ use Session;
 class EChartController extends Controller
 {
   public function index(){
-    //if(!CRUDBooster::isView()) CRUDBooster::denyAccess();
+    if(!CRUDBooster::isView()) CRUDBooster::denyAccess();
 
     $label = DB::table('Status_summery_by_owner')->pluck('Name')->toArray();
 	  $open = DB::table('Status_summery_by_owner')->pluck('Opened')->toArray();
@@ -67,7 +68,7 @@ class EChartController extends Controller
         $chartjs1 = app()->chartjs
                          ->name('lineChartTest')
                          ->type('horizontalBar')
-                         ->size(['width' => 200, 'height' => 200])
+                         ->size(['width' => 500, 'height' => 200])
                          ->labels($label)
                          ->datasets([
                     [
@@ -115,6 +116,7 @@ class EChartController extends Controller
 
                         'yAxes'  => [
                                       [ 'stacked' => true,
+                                        'barThickness' => 20,
                                         'gridLines' => [ 'display' => true ]
                                       ]
                                     ]

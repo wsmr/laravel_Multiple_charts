@@ -21,12 +21,6 @@ class TestController extends Controller
         $completed = DB::table('Status_summery_by_owner')->pluck('Completed')->toArray();
 
 
-        
-
-
-
-
-
 
         $StatusSummeryByOwner = new Test2;
         $StatusSummeryByOwner->labels($label);
@@ -35,16 +29,21 @@ class TestController extends Controller
         $StatusSummeryByOwner->dataset('Inprogress', 'bar',$inprogress);
         $StatusSummeryByOwner->dataset('Completed', 'bar',$completed);
 
+
+
         $tables = DB::table('Status_summery_by_owner')->get();
+
+
 
         $chartjs1 = app()->chartjs
                          ->name('lineChartTest')
                          ->type('horizontalBar')
-                         ->size(['width' => 200, 'height' => 200])
+                         ->size(['width' => 500, 'height' => 200])
                          ->labels($label)
                          ->datasets([
                     [
                         "label" => "Open",
+
                         'backgroundColor' => "rgba(38, 185, 154, 0.31)",
                         'borderColor' => "rgba(38, 185, 154, 0.7)",
                         "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
@@ -65,6 +64,7 @@ class TestController extends Controller
                     ],
                     [
                         "label" => "Completed",
+
                         'backgroundColor' => "rgba(20, 100, 154, 0.31)",
                         'borderColor' => "rgba(38, 185, 154, 0.7)",
                         "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
@@ -76,18 +76,24 @@ class TestController extends Controller
                 ])
                       ->options([])
                       ->optionsRaw([
+
                     'legend' => [
                                   'display' => true,
+
                                   'labels' => ['fontColor' => '#000'] ],
                     'scales' => [
+
                         'xAxes' => [
+
                                     [ 'stacked' => true,
                                       'gridLines' => [ 'display' => true ]
                                     ]
                                   ],
 
                         'yAxes'  => [
+
                                       [ 'stacked' => true,
+                                        'barThickness' => 20,
                                         'gridLines' => [ 'display' => true ]
                                       ]
                                     ]
@@ -101,3 +107,44 @@ class TestController extends Controller
 
       }
       }
+
+/*
+
+
+~~~~~~~~~~~~~~~HTML~~~~~~~~~~~~~~~~~~~~~~~~~~
+<div id="container">
+  <canvas id="myChart" width="800" height="800"></canvas>
+</div>
+
+~~~~~~~~~~~~~~~~~`CSS~~~~~~~~~~~~~~~~~~~~~~~~
+
+#container {
+  width: 800px;
+  height: 400px;
+}
+
+~~~~~~~~~~~~~~~~~~JS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      var options = {
+      	scales: {
+      		yAxes: [{
+      			categoryPercentage: .8,
+      			barPercentage: 1,
+      		}, {
+      			id: 'y-axis-2',
+      			type: 'category',
+      			display: false,
+      			categoryPercentage: .4,
+      			barPercentage: 1,
+      			position: 'left',
+      //      barThickness: 20,
+      			gridLines: {
+      				offsetGridLines: true
+      			}
+      		}]
+      	},
+      	legend: {
+      		display: false
+      	},
+      	responsive: false
+      };
